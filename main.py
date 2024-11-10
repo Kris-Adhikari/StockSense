@@ -1,13 +1,24 @@
 import discord
 from discord.ext import commands
 import os
-from dotenv import load_dotenv
 from database import Database
 from commands import StockCommands
 import logging
+from flask import Flask
+from threading import Thread
 
-load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot is running!"
+
+def run():
+    app.run(host='0.0.0.0', port=8080)
+
+Thread(target=run).start()
+
+TOKEN = os.environ['DISCORD_TOKEN']
 
 logging.basicConfig(
     level=logging.INFO,
